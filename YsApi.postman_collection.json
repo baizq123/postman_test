@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "e9bcf5d1-b6ec-4165-860b-fc33cf78f82b",
+		"name": "影视Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "有效",
+			"item": [
+				{
+					"name": "查询影片信息",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"沐浴之王\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://v.juhe.cn/movie/query?key={{key_1}}&movieid={{youxiao}}",
+							"protocol": "http",
+							"host": [
+								"v",
+								"juhe",
+								"cn"
+							],
+							"path": [
+								"movie",
+								"query"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key_1}}"
+								},
+								{
+									"key": "movieid",
+									"value": "{{youxiao}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "今日放映影片",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									" var abc = pm.response.json();\r",
+									"// 采用的原理是：把需要的数据提取出来赋值给一个变量，然后把这个变量变成全局或是局部\r",
+									"// 设置局部变量  movie = abc[\"result\"][1][\"movieId\"]\r",
+									"pm.environment.set(\"movie\", abc[\"result\"][1][\"movieId\"]);\r",
+									"// 设置全局变量\r",
+									"pm.globals.set(\"movie_1\", abc[\"result\"][1][\"movieId\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://v.juhe.cn/movie/movies.today?key={{key_1}}&cityid=10",
+							"protocol": "http",
+							"host": [
+								"v",
+								"juhe",
+								"cn"
+							],
+							"path": [
+								"movie",
+								"movies.today"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key_1}}"
+								},
+								{
+									"key": "cityid",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "无效",
+			"item": [
+				{
+					"name": "查询影片信息 Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.reason).to.not.eql(\"成功的返回\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://v.juhe.cn/movie/query?key={{key_1}}&movieid={{name}}",
+							"protocol": "http",
+							"host": [
+								"v",
+								"juhe",
+								"cn"
+							],
+							"path": [
+								"movie",
+								"query"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key_1}}"
+								},
+								{
+									"key": "movieid",
+									"value": "{{wuxiao}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "今日放映影片 Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									" var abc = pm.response.json();\r",
+									"// 采用的原理是：把需要的数据提取出来赋值给一个变量，然后把这个变量变成全局或是局部\r",
+									"// 设置局部变量  movie = abc[\"result\"][1][\"movieId\"]\r",
+									"pm.environment.set(\"movie\", abc[\"result\"][1][\"movieId\"]);\r",
+									"// 设置全局变量\r",
+									"pm.globals.set(\"movie_1\", abc[\"result\"][1][\"movieId\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://v.juhe.cn/movie/movies.today?key={{key_1}}&cityid={{age}}",
+							"protocol": "http",
+							"host": [
+								"v",
+								"juhe",
+								"cn"
+							],
+							"path": [
+								"movie",
+								"movies.today"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key_1}}"
+								},
+								{
+									"key": "cityid",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
